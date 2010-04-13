@@ -3,8 +3,8 @@ require "json"
 
 class Array
     def valid_ids_required
-		raise Cascaad::BadRequest if(self.empty?)
-		self.each do |id|
+		raise Cascaad::BadRequest if empty?
+		each do |id|
 			raise Cascaad::BadRequest unless id =~ /[0-9]+/
 		end
     end
@@ -34,13 +34,11 @@ module Cascaad
 			raise BadRequest if @command.empty?
 			raise UnsupportedDomain unless domain == 'twitter.com'
 
-			begin
-				open(api_url_for(domain)) do |response|
-					JSON.parse(response.read)
-				end
-			rescue OpenURI::HTTPError
-				raise Cascaad::BadApiKey
+			open(api_url_for(domain)) do |response|
+				JSON.parse(response.read)
 			end
+			rescue OpenURI::HTTPError
+			raise Cascaad::BadApiKey
 		end
 
 	private
