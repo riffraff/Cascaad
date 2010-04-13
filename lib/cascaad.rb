@@ -20,10 +20,6 @@ module Cascaad
 
 		attr :api_key
 
-		def initialize(api_key)
-			@api_key = api_key
-		end
-		
 		def show_messages(*ids)
 			ids.valid_ids_required
 			Client.new(@api_key, "show", ids)
